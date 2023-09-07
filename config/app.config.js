@@ -3,5 +3,5 @@ const MONGO_DB_CONFIG = {
 };
 
 module.exports = {
-    MONGO_DB_CONFIG,
+    MONGO_DB_CONFIG
 };
