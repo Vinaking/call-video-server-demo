@@ -1,5 +1,5 @@
 const MONGO_DB_CONFIG = {
-    DB: "mongodb://127.0.0.1:27017/meeting-app"
+    DB: "mongodb://call-video-server.onrender.com:27017/meeting-app"
 };
 
 module.exports = {
