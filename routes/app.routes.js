@@ -8,6 +8,4 @@ router.get("/meeting/join", meetingController.checkMeetingExists);
 
 router.get("/meeting/get", meetingController.getAllMeetingUsers);
 
-module.exports = {
-    router
-};
+module.exports = router;
