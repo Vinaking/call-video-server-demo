@@ -35,4 +35,6 @@ const meetingUser = mongoose.model(
     )
 );
 
-module.exports = meetingUser
+module.exports = {
+    meetingUser
+};

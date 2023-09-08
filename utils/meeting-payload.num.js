@@ -17,4 +17,6 @@ const MeetingPayloadEnum = {
     UNKNOWN: 'unknown'
 }
 
-module.exports = MeetingPayloadEnum;
+module.exports = {
+    MeetingPayloadEnum,
+};
