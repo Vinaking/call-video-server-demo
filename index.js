@@ -32,10 +32,11 @@ app.use(bodyParser.json())
 
 app.use(express.json());
 app.use("/api", require("./routes/app.routes"));
-app.post('/', (req, res) => {
-  let data = req.body;
-  res.send('Data Received: ' + JSON.stringify(data));
-})
+// app.post('/', (req, res) => {
+//   let data = req.body;
+//   res.send('Data Received: ' + JSON.stringify(data));
+// })
+app.route("/").get((req, res) => { res.json("Hey there welcome again Flutter!!!") })
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 // app.use(express.static(path.join(__dirname, './public-flutter')));

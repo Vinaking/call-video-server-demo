@@ -27,10 +27,15 @@ exports.startMeeting = (req, res, next) => {
 exports.checkMeetingExists = (req, res, next) => {
     const{meetingId} = req.query;
 
+    console.log('join-meetingid: '+ meetingId);
+
     meetingServices.checkMeetingExists(meetingId, (error, results) => {
         if(error) {
+            console.log('join-meetingid: error' + error);
             return next(error);
         }
+
+        console.log('join-meetingid: success');
         return res.status(200).send({
             message: "Success",
             data: results
