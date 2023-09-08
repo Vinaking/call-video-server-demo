@@ -221,6 +221,8 @@ function addUser(socket, {meetingId, userId, name}) {
 }
 
 function sendMessage(socket, payload) {
+    console.log("meeting-helper: sendMessage: payloadtype: "+ payload.type);
+
     socket.send(JSON.stringify(payload));
 }
 
