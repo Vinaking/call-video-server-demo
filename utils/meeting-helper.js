@@ -2,6 +2,7 @@ const meetingServices = require("../services/meeting.service");
 const {MeetingPayloadEnum} = require("./meeting-payload.num");
 
 async function joinMeeting(meetingId, socket, meetingServer, payload) {
+    console.log("meeting-helper: joinMeeting: meetingId: "+ meetingId);
     const {userId, name} = payload.data;
 
     meetingServices.isMeetingPresent(meetingId, async(error, results) => {
@@ -38,6 +39,7 @@ async function joinMeeting(meetingId, socket, meetingServer, payload) {
 }
 
 function forwardConnectionRequest(meetingId, socket, meetingServer, payload) {
+    console.log("meeting-helper: forwardConnectionRequest: meetingId: "+ meetingId);
     const {userId, otherUserId, name} = payload.data;
     
     var model = {
@@ -62,6 +64,7 @@ function forwardConnectionRequest(meetingId, socket, meetingServer, payload) {
 }
 
 function forwardIceCandidate(meetingId, socket, meetingServer, payload) {
+    console.log("meeting-helper: forwardIceCandidate: meetingId: "+ meetingId);
     const {userId, otherUserId, candidate} = payload.data;
     
     var model = {
@@ -85,6 +88,7 @@ function forwardIceCandidate(meetingId, socket, meetingServer, payload) {
 }
 
 function forwardOfferSDP(meetingId, socket, meetingServer, payload) {
+    console.log("meeting-helper: forwardOfferSDP: meetingId: "+ meetingId);
     const {userId, otherUserId, sdp} = payload.data;
     
     var model = {
@@ -108,6 +112,7 @@ function forwardOfferSDP(meetingId, socket, meetingServer, payload) {
 }
 
 function forwardAnswerSDP(meetingId, socket, meetingServer, payload) {
+    console.log("meeting-helper: forwardAnswerSDP: meetingId: "+ meetingId);
     const {userId, otherUserId, sdp} = payload.data;
     
     var model = {
@@ -131,6 +136,7 @@ function forwardAnswerSDP(meetingId, socket, meetingServer, payload) {
 }
 
 function userLeft(meetingId, socket, meetingServer, payload) {
+    console.log("meeting-helper: userLeft: meetingId: "+ meetingId);
     const {userId} = payload.data;
     
     broadcastUsers(meetingId, socket, meetingServer, {
@@ -160,6 +166,7 @@ function endMeeting(meetingId, socket, meetingServer, payload) {
 }
 
 function forwardEvent(meetingId, socket, meetingServer, payload) {
+    console.log("meeting-helper: forwardEvent: meetingId: "+ meetingId);
     const {userId} = payload.data;
     
     broadcastUsers(meetingId, socket, meetingServer, {
@@ -173,6 +180,7 @@ function forwardEvent(meetingId, socket, meetingServer, payload) {
 }
 
 function addUser(socket, {meetingId, userId, name}) {
+    console.log("meeting-helper: addUser: meetingId: "+ meetingId);
     let promise = new Promise( function (resolve, reject) {
         meetingServices.getMeetingUser({meetingId, userId}, (error, results) => {
             if(!results) {

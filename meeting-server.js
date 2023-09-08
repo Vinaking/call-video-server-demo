@@ -24,6 +24,8 @@ function handleMessage(meetingId, socket, message, meetingServer) {
         payload = message
     }
 
+    console.log("meeting-server: handleMessage: payloadtype: "+ payload.type);
+
     switch(payload.type) {
         case MeetingPayloadEnum.JOINED_MEETING: 
             meetingHelper.joinMeeting(meetingId, socket, meetingServer, payload);
@@ -62,7 +64,6 @@ function initMeetingServer(server) {
 
     meetingServer.on('connection', socket => {
         const meetingId = socket.handshake.query.id;
-
         listenMessage(meetingId, socket, meetingServer);
     })
 }
