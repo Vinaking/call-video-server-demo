@@ -5,6 +5,8 @@ async function joinMeeting(meetingId, socket, meetingServer, payload) {
     console.log("meeting-helper: joinMeeting: meetingId: "+ meetingId);
     const {userId, name} = payload.data;
 
+    console.log("meeting-helper: joinMeeting: userId: "+ userId);
+
     meetingServices.isMeetingPresent(meetingId, async(error, results) => {
         if(error && !results) {
             sendMessage(socket, {
@@ -39,8 +41,9 @@ async function joinMeeting(meetingId, socket, meetingServer, payload) {
 }
 
 function forwardConnectionRequest(meetingId, socket, meetingServer, payload) {
-    console.log("meeting-helper: forwardConnectionRequest: meetingId: "+ meetingId);
     const {userId, otherUserId, name} = payload.data;
+
+    console.log("meeting-helper: forwardConnectionRequest: payload: "+ userId + " " + otherUserId + " " + name );
     
     var model = {
         meetingId: meetingId,
@@ -58,8 +61,10 @@ function forwardConnectionRequest(meetingId, socket, meetingServer, payload) {
                 }
             });
 
+            console.log("meeting-helper: connection-request: "+ payload.data);
             meetingServer.to(results.socketId).emit('message', sendPayload)
         }
+        
     });
 }
 
@@ -81,7 +86,7 @@ function forwardIceCandidate(meetingId, socket, meetingServer, payload) {
                     candidate
                 }
             });
-
+            console.log("meeting-helper: forwardIceCandidate: socket send: "+ meetingId + " socketid: " + results.socketId);
             meetingServer.to(results.socketId).emit('message', sendPayload)
         }
     });
@@ -136,8 +141,8 @@ function forwardAnswerSDP(meetingId, socket, meetingServer, payload) {
 }
 
 function userLeft(meetingId, socket, meetingServer, payload) {
-    console.log("meeting-helper: userLeft: meetingId: "+ meetingId);
     const {userId} = payload.data;
+    console.log("meeting-helper: userLeft: userId: "+ userId);
     
     broadcastUsers(meetingId, socket, meetingServer, {
         type: MeetingPayloadEnum.USER_LEFT,
@@ -158,9 +163,13 @@ function endMeeting(meetingId, socket, meetingServer, payload) {
     });
 
     meetingServices.getAllMeetingUsers(meetingId, (error, results) => {
-        for (let i = 0; i < results.length; i++) {
-            const meetingUser = results[i];
-            meetingServer.socket.connect(meetingUser.socketId).disconect();
+        let usersStr = ""+results;
+        let users = Array.from(usersStr)
+        console.log("meeting-helper: getAllMeetingUsers aa: "+ users.length);
+        for (let i = 0; i < users.length; i++) {
+            const meetingUser = users[i];
+
+            // meetingServer.socket.connect(meetingUser.socketId).disconect();
         }
     })
 }
@@ -227,6 +236,7 @@ function sendMessage(socket, payload) {
 }
 
 function broadcastUsers(meetingId, socket, meetingServer, payload) {
+    console.log("meeting-helper: payload: "+ payload.type + " userid: "+ payload.data.userId);
     socket.broadcast.emit("message", JSON.stringify(payload))
 }
 
