@@ -10,6 +10,14 @@ const server = http.createServer(app);
 const mongoose = require("mongoose");
 const {MONGO_DB_CONFIG} = require("./config/app.config");
 const {initMeetingServer} = require("./meeting-server");
+const cors=require("cors");
+const corsOptions ={
+   origin:'*', 
+   credentials:true,            //access-control-allow-credentials:true
+   optionSuccessStatus:200,
+}
+app.use(cors(corsOptions)) // Use this after the variable declaration
+
 
 initMeetingServer(server)
 
@@ -28,7 +36,6 @@ mongoose.connect(MONGO_DB_CONFIG.DB, {
 var bodyParser = require('body-parser')
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json())
-
 
 app.use(express.json());
 app.use("/api", require("./routes/app.routes"));
