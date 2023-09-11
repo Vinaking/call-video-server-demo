@@ -39,16 +39,16 @@ app.use(bodyParser.json())
 
 app.use(express.json());
 app.use("/api", require("./routes/app.routes"));
-app.post('/', (req, res) => {
-  let data = req.body;
-  res.send('Data Received: ' + JSON.stringify(data));
-})
+// app.post('/', (req, res) => {
+//   let data = req.body;
+//   res.send('Data Received: ' + JSON.stringify(data));
+// })
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
-// app.use(express.static(path.join(__dirname, './public-flutter')));
-// app.get('*', (_, res) => {
-//   res.sendFile(path.resolve(__dirname, './public-flutter/index.html'));
-// });
+app.use(express.static(path.join(__dirname, './public-flutter')));
+app.get('*', (_, res) => {
+  res.sendFile(path.resolve(__dirname, './public-flutter/index.html'));
+});
 
 server.listen(process.env.port || 3002, () => {
   console.log('Ready to Go!');
