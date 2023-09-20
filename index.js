@@ -13,10 +13,10 @@ const {initMeetingServer} = require("./meeting-server");
 const cors=require("cors");
 const corsOptions ={
    origin:'*', 
-   credentials:true,            //access-control-allow-credentials:true
+   credentials:true,           
    optionSuccessStatus:200,
 }
-app.use(cors(corsOptions)) // Use this after the variable declaration
+app.use(cors(corsOptions)) 
 
 
 initMeetingServer(server)
@@ -24,8 +24,7 @@ initMeetingServer(server)
 mongoose.Promise = global.Promise;
 mongoose.connect(MONGO_DB_CONFIG.DB, {
   useNewUrlParser: true, 
-  useUnifiedTopology: true,
-  family: 4
+  useUnifiedTopology: true
 })
 .then(() => {
   console.log("Database connected");

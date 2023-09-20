@@ -188,6 +188,48 @@ function forwardEvent(meetingId, socket, meetingServer, payload) {
 
 }
 
+function addUserToSocket(meetingId, socket, meetingServer, payload) {
+    const {userId, name} = payload.data;
+    console.log("addUserToSocket: userId: "+ userId)
+    addUser(socket, {meetingId, userId, name}).then((results) => {
+        if(results) {
+            console.log("add user success")
+        }
+    }, (error) => {
+        console.log(error);
+    });
+}
+
+function menuEvent(meetingId, socket, meetingServer, payload) {
+    console.log("delivery: " + payload.type);
+    broadcastUsers(meetingId, socket, meetingServer, {
+        type: payload.type,
+        data: {
+            ...payload.data
+        }
+    });
+
+    // meetingServices.getAllMeetingUsers(meetingId, (error, results) => {
+    //     let usersStr = ""+results;
+    //     let users = Array.from(usersStr)
+    //     console.log("meeting-helper: getAllMeetingUsers aa: "+ users.length);
+
+    //     var sendPayload = JSON.stringify({
+    //         type: payload.type,
+    //         data: {
+    //             ...payload.data
+    //         }
+    //     });
+
+    //     for (let i = 0; i < users.length; i++) {
+    //         const meetingUser = users[i];
+
+    //         meetingServer.to(meetingUser.socketId).emit('message', sendPayload)
+    //     }
+    // })
+
+}
+
 function addUser(socket, {meetingId, userId, name}) {
     console.log("meeting-helper: addUser: meetingId: "+ meetingId);
     let promise = new Promise( function (resolve, reject) {
@@ -251,5 +293,7 @@ module.exports = {
     forwardEvent,
     addUser,
     sendMessage,
-    broadcastUsers
+    broadcastUsers,
+    addUserToSocket,
+    menuEvent
 }

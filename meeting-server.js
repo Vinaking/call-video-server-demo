@@ -54,6 +54,17 @@ function handleMessage(meetingId, socket, message, meetingServer) {
             break;
         case MeetingPayloadEnum.UNKNOWN: 
             break;
+
+        case "add-user":
+            meetingHelper.addUserToSocket(meetingId, socket, meetingServer, payload);
+            break;   
+        case "delivery":
+        case "appointment":
+        case "interview":
+        case "call-video":   
+            meetingHelper.menuEvent(meetingId, socket, meetingHelper, payload);
+            break;
+
         default:
             break;
     }
