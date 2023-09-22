@@ -62,6 +62,9 @@ function handleMessage(meetingId, socket, message, meetingServer) {
         case "appointment":
         case "interview":
         case "call-video":   
+        case "client-delivery":
+        case "client-appointment":
+        case "client-interview": 
             meetingHelper.menuEvent(meetingId, socket, meetingServer, payload);
             break;
 
