@@ -79,6 +79,9 @@ function initMeetingServer(server) {
     meetingServer.on('connection', socket => {
         const meetingId = socket.handshake.query.id;
         listenMessage(meetingId, socket, meetingServer);
+        socket.on("disconnect", () => {
+            socket.removeAllListeners("message");
+        });
     })
 }
 

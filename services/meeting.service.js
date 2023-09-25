@@ -13,7 +13,6 @@ async function getAllMeetingUsers(meetId, callback) {
 }
 
 async function startMeeting(params, callback) {
-    console.log(params)
     const meetingSchema = new meeting(params);
     meetingSchema.save()
     .then(async(response) => {

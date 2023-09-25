@@ -193,7 +193,7 @@ function joinGroup(meetingId, socket) {
 }
 
 function menuEvent(meetingId, socket, meetingServer, payload) {
-    console.log("delivery: " + payload.type);
+    console.log("sendByMeetingID: " + meetingId);
     // broadcastUsers(meetingId, socket, meetingServer, {
     //     type: payload.type,
     //     data: {
@@ -207,6 +207,7 @@ function menuEvent(meetingId, socket, meetingServer, payload) {
             ...payload.data
         }
     });
+    console.log("sendPayload: " + sendPayload);
 
     meetingServer.to(meetingId).emit('message', sendPayload)
 
