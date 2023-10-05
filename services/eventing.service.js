@@ -15,13 +15,24 @@ async function saveEvent(params, callback) {
 }
 
 async function getAllEventing(meetId, callback) {
-    eventing.find({meetingId: meetId})
-    .then((response) => {
-        return callback(null, response);
-    })
-    .catch((error) => {
-        return callback(error);
-    })
+    if (meetId == "") {
+        eventing.find()
+        .then((response) => {
+            return callback(null, response);
+        })
+        .catch((error) => {
+            return callback(error);
+        })
+    } else {
+        eventing.find({meetingId: meetId})
+        .then((response) => {
+            return callback(null, response);
+        })
+        .catch((error) => {
+            return callback(error);
+        })
+    }
+    
 }
 
 module.exports = {
